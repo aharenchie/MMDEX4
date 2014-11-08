@@ -11,6 +11,7 @@ public class grabTest extends Applet {
 	int h = 0; //元になるイメージの縦幅を代入する
 	
 	int pix[]; //元になるイメージを格納するための配列
+	int tmp_pix[];
 	int new_pix[]; //変更後のイメージを格納するための配列
 	
 	public void init(){
@@ -40,6 +41,7 @@ public class grabTest extends Applet {
 		h = img.getHeight(this); //ロードしたイメージの縦幅を取得
 		
 		pix = new int[w*h];
+		tmp_pix = new int[w*h];
 		new_pix = new int[w*h];
 		
 		setPix();
@@ -62,15 +64,19 @@ public class grabTest extends Applet {
 			
 		}catch (InterruptedException e){}
 		
-		/*左右反転*/
-		for(int i=0;i<h;i++){
-			for(int j=0;j<w;j++){
-				new_pix[w*i+j] = pix[w*(i+1)-(j+1)]; 	
-			}
+		/*上下反転*/
+		for(int i=1;i<=w*h;i++){
+			new_pix[i-1] = pix[w*h-i]; 			
 		}
 		
-		MemoryImageSource mimg = new MemoryImageSource(w,h,new_pix,0,w);
+		/*左右反転
+		for(int i=0;i<h;i++){
+			for(int j=0;j<w;j++){
+				new_pix[w*i+j] = tmp_pix[w*(i+1)-(j+1)]; 	
+			}
+		}*/
 		
+		MemoryImageSource mimg = new MemoryImageSource(w,h,new_pix,0,w);
 		new_img = createImage(mimg);
 	}
 	
