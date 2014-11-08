@@ -65,16 +65,21 @@ public class grabTest extends Applet {
 		}catch (InterruptedException e){}
 		
 		/*上下反転*/
-		for(int i=1;i<=w*h;i++){
-			new_pix[i-1] = pix[w*h-i]; 			
-		}
-		
-		/*左右反転
-		for(int i=0;i<h;i++){
-			for(int j=0;j<w;j++){
-				new_pix[w*i+j] = tmp_pix[w*(i+1)-(j+1)]; 	
+		for(int i=0;i < h;i++){
+			if(h*1/3 < i && h*2/3 > i){
+				for(int j=0;j < w;j++){
+					if(w*1/3 < j && w*2/3 > j){
+						new_pix[w*i+j] = pix[w*h-(w*i+j)-1]; 
+					}else{
+						new_pix[w*i+j] = pix[w*i+j]; 
+					}					
+				}
+			}else{
+				for(int j=0;j < w;j++)
+					new_pix[w*i+j] = pix[w*i+j]; 
 			}
-		}*/
+				
+		}
 		
 		MemoryImageSource mimg = new MemoryImageSource(w,h,new_pix,0,w);
 		new_img = createImage(mimg);
